@@ -1,21 +1,49 @@
 import tkinter as tk
 
 class Bienvenida:
-    def __init__(self, root):
+    def __init__(self, root):# inicio a la ventana 
         self.root = root
-        self.root.title("Control de Asistencia")
+        self.root.title("Control de Asistencia") # Titulo que le puedes asignar a la ventana 
+        self.empleados = [] #lista donde puedes agrear los datos del un empleado 
 
         #fondo principal de color gris y la creacion del marco 
+        self.menu_frame = tk.Frame(self.root, width=200, bg="blue")
+        self.menu_frame.pack(side="left", fill="y")
         self.content_frame = tk.Frame(self.root, bg="grey")
         self.content_frame.pack(side="right", expand=True, fill="both")
-
-        
+        #Botones del menú 
+        self.crear_boton_menu("Bienvenid@", self.mostrar_inicio)
+        self.crear_boton_menu("Historial", self.mostrar_historial)
+        self.seccion_actual = None
         self.mostrar_inicio()
 
-    def mostrar_inicio(self):
+    def crear_boton_menu(self, texto, comando): # creacion del bonton lateral de las ventanas 
+        tk.Button(self.menu_frame, text=texto, bg="blue", fg="white", font=("Arial", 12), command=comando).pack(fill="x", pady=5)
+
+    def limpiar_seccion_actual(self): #limpia el contenido o los datos del código si quieres ingresar algo 
+        if self.seccion_actual:
+            self.seccion_actual.destroy()
+
+    def mostrar_inicio(self): #Muestra el incio  de bienvenida ylimpia para poder meterte a la otra ventana 
+        self.limpiar_seccion_actual()
         tk.Label(self.content_frame, text="Bienvenido al Control de Asistencias de un Hospital", font=("Arial", 24, "bold"), bg="grey").pack(pady=100)
 
+    def mostrar_historial(self): #Metodo que muestra el hitorial de los empleados o la informacion que quieras ingresar despues dentro del código 
+        self.limpiar_seccion_actual()
+        if not self.empleados:
+            tk.Label(self.content_frame, text="No hay empleados registrados.", font=("Arial", 12), bg="grey").pack()
+            return
+        text_area = tk.Text(self.content_frame, font=("Arial", 11), height=10)
+        text_area.pack(expand=True, fill="both", padx=10, pady=10)
+        for emp in self.empleados:
+            text_area.insert("end", f"{emp['nombre']} | {emp['id_empleado']} | {emp['edad']} | {emp['puesto']}\n")
+
+# ejecutacion 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = Bienvenida(root)
-    root.mainloop()
+    app = Bienvenida(root)  # Crea o realiza la clase Bienvenida, pasando la ventana principal
+    root.mainloop() # Inicia el bucle de tkinter para mantener la aplicación abierta
+
+
+
+# dentro de este codigo solo realice y meti la bienvenida y el historial para seguir agrgando más funciones o ingresar mas clases dentro de este codigo 

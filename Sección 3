@@ -1,0 +1,194 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class Empleado: #Define los atributos del empleado
+    def __init__(self, nombre, id_empleado, edad, fecha_nacimiento, cedula, domicilio, telefono, correo, fecha_ingreso, genero, puesto, grado_estudio, tipo_contratacion, turno="", jornada="", hora_entrada="00:00", dia_entrada="Lunes", fecha_entrada=""):
+        self.nombre = nombre
+        self.id_empleado = id_empleado
+        self.edad = edad
+        self.fecha_nacimiento = fecha_nacimiento
+        self.cedula = cedula
+        self.domicilio = domicilio
+        self.telefono = telefono
+        self.correo = correo
+        self.fecha_ingreso = fecha_ingreso
+        self.genero = genero
+        self.puesto = puesto
+        self.grado_estudio = grado_estudio
+        self.tipo_contratacion = tipo_contratacion
+        # Atributos que añadi  sobre el turno y horario  del empleado 
+        self.turno = turno
+        self.jornada = jornada
+        self.hora_entrada = hora_entrada
+        self.dia_entrada = dia_entrada
+        self.fecha_entrada = fecha_entrada
+
+class Bienvenida:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Control de Asistencias de un Hospital")
+        self.empleados = []
+
+        self.menu_frame = tk.Frame(self.root, width=200, bg="blue")  
+        self.menu_frame.pack(side="left", fill="y")
+        self.content_frame = tk.Frame(self.root, bg="grey")  
+        self.content_frame.pack(side="right", expand=True, fill="both")
+
+        self.boton_bienvenida = tk.Button(self.menu_frame, text="Bienvenid@", command=self.mostrar_bienvenida, bg="blue", fg="white")  
+        self.boton_bienvenida.pack(fill="x", pady=5)
+        self.boton_datos_trabajador = tk.Button(self.menu_frame, text="Datos del Empleado", command=self.mostrar_datos_trabajador, bg="blue", fg="white") 
+        self.boton_datos_trabajador.pack(fill="x", pady=5)
+        self.boton_turno_horario = tk.Button(self.menu_frame, text="Turno y Horario", command=self.mostrar_turno_horario, bg="blue", fg="white")  
+        self.boton_turno_horario.pack(fill="x", pady=5)
+        self.boton_historial = tk.Button(self.menu_frame, text="Historial", command=self.mostrar_historial, bg="blue", fg="white")  # Botón azul (Historial al final)
+        self.boton_historial.pack(fill="x", pady=5)
+
+        self.mostrar_bienvenida()
+
+    def limpiar_seccion_actual(self):
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+
+    def mostrar_bienvenida(self):
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="!!Bienvenido al Control de Asistencias de un Hospital!!", font=("Arial", 18), bg="grey", fg="black").pack(pady=100)
+
+    def mostrar_datos_trabajador(self):
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="Registrar Empleado", font=("Arial", 16), bg="grey", fg="black").pack(pady=20)
+        # Crear las variables para almacenar los datos de entrada del formulario
+        self.nombre_var = tk.StringVar()
+        self.id_var = tk.StringVar()
+        self.edad_var = tk.StringVar()
+        self.fecha_nacimiento_var = tk.StringVar()
+        self.cedula_var = tk.StringVar()
+        self.domicilio_var = tk.StringVar()
+        self.telefono_var = tk.StringVar()
+        self.correo_var = tk.StringVar()
+        self.fecha_ingreso_var = tk.StringVar()
+        # Crear los campos de entrada para cada dato del empleado que ingreses 
+        self.crear_input("Nombre", self.nombre_var)
+        self.crear_input("ID", self.id_var)
+        self.crear_input("Edad", self.edad_var)
+        self.crear_input("Fecha de Nacimiento (dd/mm/yyyy)", self.fecha_nacimiento_var)
+        self.crear_input("Cédula Profesional", self.cedula_var)
+        self.crear_input("Domicilio", self.domicilio_var)
+        self.crear_input("Teléfono", self.telefono_var)
+        self.crear_input("Correo Electrónico", self.correo_var)
+        self.crear_input("Fecha de Ingreso (dd/mm/yyyy)", self.fecha_ingreso_var)
+
+        self.genero_var = tk.StringVar(value="        ")
+        self.crear_opciones("Género", ["Masculino", "Femenino"], self.genero_var)
+
+        self.puesto_var = tk.StringVar(value="      ")
+        self.crear_opciones("Puesto", ["Médico", "Enfermero", "Seguridad", "Limpieza", "Administrativo"], self.puesto_var)
+ 
+        self.grado_estudio_var = tk.StringVar(value="      ")
+        self.crear_opciones("Último Grado de Estudio", ["Secundaria", "Preparatoria", "Licenciatura", "Doctorado"], self.grado_estudio_var)
+
+        self.tipo_contratacion_var = tk.StringVar(value="      ")
+        self.crear_opciones("Tipo de Contratación", ["Basificados", "Homologados", "Regularizados"], self.tipo_contratacion_var)
+
+        tk.Button(self.content_frame, text="Registrar", command=self.registrar_empleado, bg="blue", fg="white").pack(pady=10)
+
+    def crear_input(self, label, var):
+        frame = tk.Frame(self.content_frame)
+        frame.pack(pady=5)
+        tk.Label(frame, text=label, bg="grey", fg="black").pack(side="left", padx=5)
+        tk.Entry(frame, textvariable=var).pack(side="left", padx=5)
+
+    def crear_opciones(self, label, opciones, var):
+        frame = tk.Frame(self.content_frame)
+        frame.pack(pady=5)
+        tk.Label(frame, text=label, bg="grey", fg="black").pack(side="left", padx=5)
+        tk.OptionMenu(frame, var, *opciones).pack(side="left", padx=5)
+
+    def registrar_empleado(self):
+        empleado = Empleado(
+            self.nombre_var.get(), self.id_var.get(), self.edad_var.get(), self.fecha_nacimiento_var.get(), self.cedula_var.get(),
+            self.domicilio_var.get(), self.telefono_var.get(), self.correo_var.get(), self.fecha_ingreso_var.get(),
+            self.genero_var.get(), self.puesto_var.get(), self.grado_estudio_var.get(), self.tipo_contratacion_var.get(),
+            "", "", "00:00", "  ", ""  # Por defecto vacío para turno y horario
+        )
+        self.empleados.append(empleado)
+        messagebox.showinfo("Éxito", "Empleado Registrado")
+    
+    def mostrar_historial(self):
+        self.limpiar_seccion_actual()
+
+        tk.Label(self.content_frame, text="Ingrese ID para ver historial", font=("Arial", 12), bg="grey", fg="black").pack(pady=10)
+
+        self.id_buscar_var = tk.StringVar()
+        tk.Entry(self.content_frame, textvariable=self.id_buscar_var).pack(pady=5)
+        tk.Button(self.content_frame, text="Buscar", command=self.mostrar_historial_empleado, bg="blue", fg="white").pack(pady=10)
+
+    def mostrar_historial_empleado(self):
+        id_buscar = self.id_buscar_var.get()
+        for emp in self.empleados:
+            if emp.id_empleado == id_buscar:
+                self.limpiar_seccion_actual()
+                historial_text = (
+                    f"Nombre: {emp.nombre}\n"
+                    f"ID: {emp.id_empleado}\n"
+                    f"Edad: {emp.edad}\n"
+                    f"Fecha Nacimiento: {emp.fecha_nacimiento}\n"
+                    f"Cédula: {emp.cedula}\n"
+                    f"Domicilio: {emp.domicilio}\n"
+                    f"Teléfono: {emp.telefono}\n"
+                    f"Correo: {emp.correo}\n"
+                    f"Fecha Ingreso: {emp.fecha_ingreso}\n"
+                    f"Género: {emp.genero}\n"
+                    f"Puesto: {emp.puesto}\n"
+                    f"Grado Estudio: {emp.grado_estudio}\n"
+                    f"Tipo Contratación: {emp.tipo_contratacion}\n"
+                    f"Turno: {emp.turno}\n"
+                    f"Jornada: {emp.jornada}\n"
+                    f"Hora Entrada: {emp.hora_entrada}\n"
+                    f"Día Entrada: {emp.dia_entrada}\n"
+                )
+                tk.Label(self.content_frame, text=historial_text, font=("Arial", 12), bg="grey", fg="black").pack(pady=20)
+                return
+        messagebox.showwarning("No encontrado", "Empleado no encontrado")
+
+    def mostrar_turno_horario(self): # Método que muestra el formulario para registrar el turno y horario del empleado
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="Registro de Turno y Horario", font=("Arial", 16), bg="grey", fg="black").pack(pady=20)
+
+        self.id_turno_var = tk.StringVar()
+        self.crear_input("ID del Empleado", self.id_turno_var)
+
+        self.turno_var = tk.StringVar(value="  ")
+        self.crear_opciones("Turno", ["Matutino 07:00 - 14:30", "Vespertino 14:00 - 20:30", "Nocturno 20:00 - 07:30"], self.turno_var)
+
+        self.jornada_var = tk.StringVar(value="  ")
+        self.crear_opciones("Jornada", ["A:Lunes, Miércoles, Viernes", "B:Martes, Jueves, Sábado", "C:Domingo"], self.jornada_var)
+
+        self.hora_entrada_var = tk.StringVar(value="00:00")  # Hora de entrada por defecto
+        self.crear_input("Hora de Entrada ", self.hora_entrada_var)
+
+        self.dia_entrada_var = tk.StringVar(value="  ")
+        self.crear_input("Entrada (dd/mm/yyy)", self.dia_entrada_var)
+
+        tk.Button(self.content_frame, text="Actualizar Turno", command=self.actualizar_turno, bg="blue", fg="white").pack(pady=10)
+
+    def actualizar_turno(self): # Actualiza el turno y horario del empleado
+        id_turno = self.id_turno_var.get()
+        for emp in self.empleados:
+            if emp.id_empleado == id_turno:
+                emp.turno = self.turno_var.get()
+                emp.jornada = self.jornada_var.get()
+                emp.hora_entrada = self.hora_entrada_var.get()
+                emp.dia_entrada = self.dia_entrada_var.get()
+                messagebox.showinfo("Éxito", "Turno y Horario Actualizado")
+                return
+        messagebox.showwarning("No encontrado", "Empleado no encontrado")
+
+root = tk.Tk()
+app = Bienvenida(root)
+root.mainloop()
+
+"""Este programa le agregue para que permita registrar a los empleados de un hospital, y
+asignarles un turno (matutino, vespertino o nocturno), y poder ver o visualizar 
+su información al buscar su ID, tiene una interfaz gráfica donde puedes
+agregar datos como nombre, edad, género, puesto y tipo de contrato, así como los horarios de trabajo,
+también, puedes actualizar el turno de un empleado y consultar su historial en cualquier momento con su ID"""

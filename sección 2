@@ -1,0 +1,144 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class Empleado:
+    def __init__(self, nombre, id_empleado, edad, fecha_nacimiento, cedula, domicilio, telefono, correo, fecha_ingreso, genero, puesto, grado_estudio, tipo_contratacion):
+        #Da inicio a los atributos del empleado con los valores 
+        self.nombre = nombre
+        self.id_empleado = id_empleado
+        self.edad = edad
+        self.fecha_nacimiento = fecha_nacimiento
+        self.cedula = cedula
+        self.domicilio = domicilio
+        self.telefono = telefono
+        self.correo = correo
+        self.fecha_ingreso = fecha_ingreso
+        self.genero = genero
+        self.puesto = puesto
+        self.grado_estudio = grado_estudio
+        self.tipo_contratacion = tipo_contratacion
+
+class Bienvenida:# Clase principal llamada "Bienvenida"
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Bienvenido al Control de Asistencias de un Hospital")
+        self.empleados = [] # Lista para almacenar los empleados registrados
+
+        
+        self.menu_frame = tk.Frame(self.root, width=200, bg="blue")  
+        self.menu_frame.pack(side="left", fill="y")
+        self.content_frame = tk.Frame(self.root, bg="grey")  
+        self.content_frame.pack(side="right", expand=True, fill="both")
+
+         
+        self.boton_bienvenida = tk.Button(self.menu_frame, text="Bienvenid@", command=self.mostrar_bienvenida, bg="blue", fg="white") 
+        self.boton_bienvenida.pack(fill="x", pady=5)
+        self.boton_datos_trabajador = tk.Button(self.menu_frame, text="Datos del Empleado", command=self.mostrar_datos_trabajador, bg="blue", fg="white") 
+        self.boton_datos_trabajador.pack(fill="x", pady=5)
+        self.boton_historial = tk.Button(self.menu_frame, text="Historial", command=self.mostrar_historial, bg="blue", fg="white")  
+        self.boton_historial.pack(fill="x", pady=5)
+         # Muestra la bienvenida al inicio
+        self.mostrar_bienvenida()
+    # limpia la sección ingresada 
+    def limpiar_seccion_actual(self):
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+ 
+    def mostrar_bienvenida(self):
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="Bienvenido al Control de Asistencias de un Hospital", font=("Arial", 18), bg="grey", fg="black").pack(pady=100)
+
+    
+    def mostrar_datos_trabajador(self):
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="Registrar Empleado", font=("Arial", 16), bg="grey", fg="black").pack(pady=20)
+
+       # Crear las variables para almacenar los datos de entrada del formulario
+        self.nombre_var = tk.StringVar()
+        self.id_var = tk.StringVar()
+        self.edad_var = tk.StringVar()
+        self.fecha_nacimiento_var = tk.StringVar()
+        self.cedula_var = tk.StringVar()
+        self.domicilio_var = tk.StringVar()
+        self.telefono_var = tk.StringVar()
+        self.correo_var = tk.StringVar()
+        self.fecha_ingreso_var = tk.StringVar()
+        # Crear los campos de entrada para cada dato del empleado que ingreses 
+        self.crear_input("Nombre", self.nombre_var)
+        self.crear_input("ID", self.id_var)
+        self.crear_input("Edad", self.edad_var)
+        self.crear_input("Fecha de Nacimiento (dd/mm/yyyy)", self.fecha_nacimiento_var)
+        self.crear_input("Cédula Profesional", self.cedula_var)
+        self.crear_input("Domicilio", self.domicilio_var)
+        self.crear_input("Teléfono", self.telefono_var)
+        self.crear_input("Correo Electrónico", self.correo_var)
+        self.crear_input("Fecha de Ingreso (dd/mm/yyyy)", self.fecha_ingreso_var)
+
+        # Crear las opciones de selección o opciones para Género, Puesto, Grado de Estudio, y Tipo de Contratación
+        self.genero_var = tk.StringVar(value="     ")
+        self.crear_opciones("Género", ["Masculino", "Femenino"], self.genero_var)
+
+        self.puesto_var = tk.StringVar(value="     ")
+        self.crear_opciones("Puesto", ["Médico", "Enfermero", "Seguridad", "Limpieza", "Administrativo"], self.puesto_var)
+
+        self.grado_estudio_var = tk.StringVar(value="     ")
+        self.crear_opciones("Último Grado de Estudio", ["Secundaria", "Preparatoria", "Licenciatura", "Doctorado"], self.grado_estudio_var)
+
+        self.tipo_contratacion_var = tk.StringVar(value="     ")
+        self.crear_opciones("Tipo de Contratación", ["Basificados", "Homologados", "Regularizados"], self.tipo_contratacion_var)
+
+        
+        tk.Button(self.content_frame, text="Registrar", command=self.registrar_empleado, bg="blue", fg="white").pack(pady=10)
+
+    
+    def crear_input(self, label, var):
+        frame = tk.Frame(self.content_frame)
+        frame.pack(pady=5)
+        tk.Label(frame, text=label, bg="grey", fg="black").pack(side="left", padx=5)
+        tk.Entry(frame, textvariable=var).pack(side="left", padx=5)
+
+    
+    def crear_opciones(self, label, opciones, var):
+        frame = tk.Frame(self.content_frame)
+        frame.pack(pady=5)
+        tk.Label(frame, text=label, bg="grey", fg="black").pack(side="left", padx=5)
+        tk.OptionMenu(frame, var, *opciones).pack(side="left", padx=5)
+
+    # Registra al empleado y lo añade a la lista
+    def registrar_empleado(self):
+        empleado = Empleado(# Crear un objeto de la clase Empleado con los valores 
+            self.nombre_var.get(), self.id_var.get(), self.edad_var.get(), self.fecha_nacimiento_var.get(), self.cedula_var.get(),
+            self.domicilio_var.get(), self.telefono_var.get(), self.correo_var.get(), self.fecha_ingreso_var.get(),
+            self.genero_var.get(), self.puesto_var.get(), self.grado_estudio_var.get(), self.tipo_contratacion_var.get()
+        )
+        self.empleados.append(empleado)
+        messagebox.showinfo("Éxito", "Empleado Registrado")
+
+    
+    def mostrar_historial(self):
+        self.limpiar_seccion_actual()
+        tk.Label(self.content_frame, text="Ingrese ID para ver historial", font=("Arial", 12), bg="grey", fg="black").pack(pady=10)
+
+        self.id_buscar_var = tk.StringVar()
+        tk.Entry(self.content_frame, textvariable=self.id_buscar_var).pack(pady=5)
+        tk.Button(self.content_frame, text="Buscar", command=self.mostrar_historial_empleado, bg="blue", fg="white").pack(pady=10)
+
+     
+    def mostrar_historial_empleado(self):
+        id_buscar = self.id_buscar_var.get()
+        for emp in self.empleados:
+            if emp.id_empleado == id_buscar:
+                self.limpiar_seccion_actual()
+                tk.Label(self.content_frame, text=f"Nombre: {emp.nombre}\nID: {emp.id_empleado}\nEdad: {emp.edad}\nFecha Nacimiento: {emp.fecha_nacimiento}\nCédula: {emp.cedula}\nDomicilio: {emp.domicilio}\nTeléfono: {emp.telefono}\nCorreo: {emp.correo}\nFecha Ingreso: {emp.fecha_ingreso}\nGénero: {emp.genero}\nPuesto: {emp.puesto}\nGrado Estudio: {emp.grado_estudio}\nTipo Contratación: {emp.tipo_contratacion}", font=("Arial", 12), bg="grey", fg="black").pack(pady=20)
+                return
+        messagebox.showwarning("No encontrado", "Empleado no encontrado")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Bienvenida(root)
+    root.mainloop()
+    
+""" El objetivo de mi codigo fue crear un sistema de control de asistencias de empleados en un hospital que permita registrar, buscar y mostrar los datos del empleado que quiera ingresar y que consulta la informacion de los empleados registrados 
+el codigo con tiene dos clases empleado que es como un molde donde guardan todos los datos del empleado, cada que registramos un empleado, el programa crea un objeto de esta clase con la informacion que le damos, la clase bienvenida es la que maneja
+toda la interfaz grafifica y que tiene un menú con tres opciones que son la Bienvenida, datos del empleado y el historial despues cuando llenas el formulario y presionas "registrar" los datos del empleado se guardan y luego puedes buscar un empleado 
+con su id o el que ingresaste  y vas a ver sus datos, si existe y si no te da un mensaje de error """ 

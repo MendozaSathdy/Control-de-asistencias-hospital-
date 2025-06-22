@@ -85,7 +85,7 @@ class Bienvenida:# Clase principal llamada "Bienvenida"
         self.crear_opciones("Último Grado de Estudio", ["Secundaria", "Preparatoria", "Licenciatura", "Doctorado"], self.grado_estudio_var)
 
         self.tipo_contratacion_var = tk.StringVar(value="     ")
-        self.crear_opciones("Tipo de Contratación", ["Basificados", "Homologados", "Regularizados"], self.tipo_contratacion_var)
+        self.crear_opciones("Tipo de Contratación", ["Basificados", "Homologados", "Regularizados","Contrato"], self.tipo_contratacion_var)
 
         
         tk.Button(self.content_frame, text="Registrar", command=self.registrar_empleado, bg="blue", fg="white").pack(pady=10)

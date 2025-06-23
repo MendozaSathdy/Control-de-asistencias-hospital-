@@ -40,7 +40,7 @@ class Bienvenida:
         self.boton_datos_trabajador.pack(fill="x", pady=5)
         self.boton_turno_horario = tk.Button(self.menu_frame, text="Turno y Horario", command=self.mostrar_turno_horario, bg="blue", fg="white")  
         self.boton_turno_horario.pack(fill="x", pady=5)
-        self.boton_historial = tk.Button(self.menu_frame, text="Historial", command=self.mostrar_historial, bg="blue", fg="white")  # Botón azul (Historial al final)
+        self.boton_historial = tk.Button(self.menu_frame, text="Historial", command=self.mostrar_historial, bg="blue", fg="white")  # Botón azul que da al final el (Historial )
         self.boton_historial.pack(fill="x", pady=5)
 
         self.mostrar_bienvenida()

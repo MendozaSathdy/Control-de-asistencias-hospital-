@@ -1,25 +1,69 @@
 # Control-de-asistencias-hospital-
-CONTROL DE ASISTENCIAS Y VACACIONES EN UN HOSPITAL
+CONTROL DE ASISTENCIAS DE UN HOSPITAL Y VACACIONES 
 
-1.- Datos del trabajador:
+1.- Datos del Empleado:
 
 Nombre completo
 
-Número del empleado (ID)
-
-Genero
+(ID) del empleado
 
 Edad
 
-2.-puesto
+Fecha de nacimiento 
 
-Médico
+Cedula 
 
-Enfermera
+Domicilio
 
-Limpieza
+Telefono 
 
-Seguridad
+Correo
+
+Fecha de ingreso
+
+Genero:
+-Masculino
+-Femenino
+
+Puesto:
+-medico
+-enfermero
+-limpieza
+-seguridad
+-administrativo 
+
+Grado de Estudio:
+-Secundaria
+-Preparatoria
+-Licenciatura
+-Doctorado
+
+Tipo de Contratación:
+-Basificados
+-Homologados
+-Regularizados
+-Contrato
+
+
+2.-Turno y Horario 
+
+(ID) del empleado al ingresar tus registros 
+
+Turno:
+-Matutino 07:00 - 14:30
+-Vespertino 14.00 - 20:30 
+-Nocturno 20:00 - 07:30 
+
+Jornada: 
+-A:Lunes, Miercoles, Viernes 
+-B:Martes, Jueves, Sabado
+-C:Domingo
+
+Hora de entrada (00:00)
+
+Entrada (dd/mm/yyyy)
+
+
 
 3.-Registro de asitencia diaria:
 
@@ -33,19 +77,13 @@ Esta de vacaciones
 
 Dia libre
 
-3.-Turnos:
 
--En un hospital hay diferentes horarios
-
-Matutino (mañana)
-
-Vespertino (tarde)
-
-Nocturno (noche)
 
 4.-Vacaciones:
 
--Cada trabajador tiene derecho a ciertos días de vacaciones por año ( por ejemplo: 15 días )
+-Cada trabajador tiene derecho a ciertos días de vacaciones por año ( por ejemplo: 15 días ) dentro de ello hay dos periodos que el primer periodo inicia de enero a junio y el segumdo periodo es de julio a diciembre 
+
+primer periodo: 
 
 ene - feb
 
@@ -58,6 +96,8 @@ abr - may
 may - jun
 
 jun - jul
+
+segundo periodo:
 
 jul - ag
 
@@ -75,6 +115,8 @@ Marcar esos dias como "VACACIONES" en el registro
 
 Dentro de dichas vacaciones tenemos dos periodos que son de enero a junio y de julio a dicienbre que abarca 15 dias de descanso 
 
+
+
 5.-Control de fechas importantes tener en cuenta :
 
 El calendario laboral( fines de semana, feriado)
@@ -83,33 +125,23 @@ Evitar que se registren vacaciones en días no laborales si no corresponden
 
 Validar que las fechas ingresadas tengan sentido (inicio antes del fin)
 
+
+
 VACACIONES(BOTONES-CLASS):
 
 Este es un código que selecciona un empleado desde un menú, asigna un periodo de vacaciones y muestra la confirmación y este evita que otro trabajador elija su mismo periodo de vacaciones
 
 Este código sirve para administrar y seleccionar vacaciones a empleados de una forma sencilla para administrar de forma de una interfaz visual.
 
-Esto es algo de información de la estructura del codigo :
-
-Messagebox:
-
-Messagebox es un submódulo de tkinter que permite mostrar ventanas emergentes (como alertas o mensajes de confirmación).
-
 Class Empleado:
 
 Se define una clase llamada Empleado, las clases son moldes para crear objetos, representamos a cada empleado como un objeto con nombre y sus vacaciones.
 
-Root: la ventana principal de Tkinter.
 
-Método para Generar Periodos:
+Meses:
+periodo 1: Ene, Feb, Mar, Abr, May, Jun
+periodo 2: Jul, Ag, Sep, Oct, Nov, Dic
 
-Def generar_periodos(self):
-
-método que construye los periodos vacacionales.
-
-Meses : Ene, Feb, Mar, Abr, May, Jun, Jul, Ag, Sep, Oct, Nov, Dic
-
-Return f”{mes} 01 – {mes} 15” for mes in meses + f”{mes} 16 – {mes} 30” for mes in meses
 
 Generar:
 

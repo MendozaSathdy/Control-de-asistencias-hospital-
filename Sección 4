@@ -232,4 +232,4 @@ root.mainloop()
 
 """Mi objetivo de mi codigo fue agregarle los periodos de vacaciones que contiene periodo 1 y periodo 2, al igual que ya lo tenia mas antes es gestionar los datos de los empleados del 
 control de asistencias del hospital, dentro del codigo agrege un diccionario de vacacions que llenara ese dato con fechas ya adelantadas cuando
-quiera sus vacaciones """
+quiera sus vacaciones que ingrese """
